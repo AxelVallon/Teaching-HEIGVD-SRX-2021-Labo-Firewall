@@ -115,7 +115,6 @@ Pour établir la table de filtrage, voici les **conditions à respecter** dans l
   <li>En suivant la méthodologie vue en classe, établir la table de filtrage avec précision en spécifiant la source et la destination, le type de trafic (TCP/UDP/ICMP/any), les ports sources et destinations ainsi que l'action désirée (<b>Accept</b> ou <b>Drop</b>, éventuellement <b>Reject</b>).
   </li>                                  
 </ol>
-
 _Pour l'autorisation d'accès (**Accept**), il s'agit d'être le plus précis possible lors de la définition de la source et la destination : si l'accès ne concerne qu'une seule machine (ou un groupe), il faut préciser son adresse IP ou son nom (si vous ne pouvez pas encore la déterminer), et non la zone. 
 Appliquer le principe inverse (être le plus large possible) lorsqu'il faut refuser (**Drop**) une connexion._
 
@@ -125,15 +124,33 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 
 **LIVRABLE : Remplir le tableau**
 
-| Adresse IP source | Adresse IP destination | Type | Port src | Port dst | Action |
-| :---:             | :---:                  | :---:| :------: | :------: | :----: |
-|                   |                        |      |          |          |        |
-|                   |                        |      |          |          |        |
-|                   |                        |      |          |          |        |
-|                   |                        |      |          |          |        |
-|                   |                        |      |          |          |        |
-|                   |                        |      |          |          |        |
-|                   |                        |      |          |          |        |
+| exo  | Adresse IP source | Adresse IP destination | Type | Port src | Port dst | Action |
+| ---- | :---------------: | :--------------------: | :--: | :------: | :------: | :----: |
+| 5    |                   |     IP serveur web     | TCP  |    80    |          | Accept |
+| 5    |                   |     IP serveur web     | TCP  |          |          |  Deny  |
+| 1    | 192.168.100.0/24  |         IP DNS         | UDP  |    53    |          | Accept |
+| 1    | 192.168.100.0/24  |         IP DNS         | TCP  |    53    |          | Accept |
+| 1    |      IP DNS       |     192.168.100/24     | TCP  |          |    53    | Accept |
+| 1    |      IP DNS       |     192.168.100/24     | UDP  |          |    53    | Accept |
+| 2    | 192.168.100.0/24  |      172.0.0.0/8       | ICMP |    8     |          | Accept |
+| 2    |    172.0.0.0/8    |    192.168.100.0/24    | ICMP |          |    0     | Accept |
+| 2    | 192.168.200.0/24  |    192.168.100.0/24    | ICMP |    8     |          | Accept |
+| 2    | 192.168.100.0/24  |    192.168.200.0/24    | ICMP |          |    0     | Accept |
+| 2    | 192.168.100.0/24  |    192.168.200.0/24    | ICMP |    8     |          | Accept |
+| 2    | 192.168.200.0/24  |    192.168.100.0/24    | ICMP |          |    0     | Accept |
+| 3    | 192.168.100.0/24  |                        | TCP  |    80    |          | Accept |
+| 3    | 192.168.100.0/24  |                        | TCP  |   8080   |          | Accept |
+| 3    |                   |    192.168.100.0/24    | TCP  |          |    80    | Accept |
+| 3    |                   |    192.168.100.0/24    | TCP  |          |   8080   | Accept |
+| 4    | 192.168.100.0/24  |                        | TCP  |   443    |          | Accept |
+| 4    |                   |    192.168.100.0/24    | TCP  |          |   443    | Accept |
+| 6    | 192.168.100.0/24  |    192.168.200.0/24    | TCP  |    23    |          | Accept |
+| 6    | 192.168.200.0/24  |    192.168.100.0/24    | TCP  |          |    23    | Accept |
+| 7    | 192.168.100.0/24  |     192.168.100.2      | TCP  |    23    |          | Accept |
+| 7    |   192.168.100.2   |    192.168.100.0/24    | TCP  |          |    23    | Accept |
+| 8    |                   |     192.168.100/24     |      |          |          |  Deny  |
+| 8    |                   |     192.168.200/24     |      |          |          |  Deny  |
+| 8    |                   |      172.0.0.0/8       |      |          |          |  Deny  |
 
 ---
 
@@ -360,14 +377,14 @@ LIVRABLE : Commandes iptables
 
 ```bash
 ping 8.8.8.8
-``` 	            
+```
 Faire une capture du ping.
 
 Vérifiez aussi la route entre votre client et le service `8.8.8.8`. Elle devrait partir de votre client et traverser votre Firewall :
 
 ```bash
 traceroute 8.8.8.8
-``` 	            
+```
 
 
 ---
