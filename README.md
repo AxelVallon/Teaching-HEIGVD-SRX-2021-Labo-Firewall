@@ -127,6 +127,7 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 | exo  | Adresse IP source | Adresse IP destination | Type | Port src | Port dst | Action |
 | ---- | :---------------: | :--------------------: | :--: | :------: | :------: | :----: |
 | 5    |                   |     IP serveur web     | TCP  |    80    |          | Accept |
+| 5    |  IP serveur web   |                        | TCP  |          |    80    | Accept |
 | 5    |                   |     IP serveur web     | TCP  |          |          |  Deny  |
 | 6    | 192.168.100.0/24  |     IP Serveur DMZ     | TCP  |          |    23    | Accept |
 | 6    |  IP Serveur DMZ   |    192.168.100.0/24    | TCP  |    23    |          | Accept |
