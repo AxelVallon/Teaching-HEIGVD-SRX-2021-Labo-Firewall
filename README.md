@@ -247,12 +247,12 @@ La communication devrait maintenant être possible entre les deux machines à tr
 ```bash
 ping 192.168.100.3
 ```
+**DMZ**
+![image](https://user-images.githubusercontent.com/21290957/111645359-eb0ff080-8800-11eb-9792-970615a22fd0.png)
 
----
+**LAN**
+![image](https://user-images.githubusercontent.com/21290957/111645515-0e3aa000-8801-11eb-8c92-10f3c09a339a.png)
 
-**LIVRABLES : captures d'écran des routes des deux machines et de votre nouvelle tentative de ping.**
-
----
 
 La communication est maintenant possible entre les deux machines. Pourtant, si vous essayez de communiquer depuis le client ou le serveur vers l'Internet, ça ne devrait pas encore fonctionner sans une manipulation supplémentaire au niveau du firewall ou sans un service de redirection ICMP. Vous pouvez le vérifier avec un ping depuis le client ou le serveur vers une adresse Internet. 
 
