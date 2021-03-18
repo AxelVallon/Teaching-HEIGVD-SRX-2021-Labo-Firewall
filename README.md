@@ -269,6 +269,8 @@ Si votre ping passe mais que la réponse contient un _Redirect Host_, ceci indiq
 **LIVRABLE : capture d'écran de votre ping vers l'Internet. Un ping qui ne passe pas ou des réponses containant des _Redirect Host_ sont acceptés.**
 
 ---
+![image](https://user-images.githubusercontent.com/21290957/111645827-65407500-8801-11eb-9f86-ea6f8b274a41.png)
+
 
 ### Configuration réseau du firewall
 
