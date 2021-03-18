@@ -128,9 +128,8 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 | ---- | :---------------: | :--------------------: | :--: | :------: | :------: | :----: |
 | 5    |                   |     IP serveur web     | TCP  |          |    80    | Accept |
 | 5    |  IP serveur web   |                        | TCP  |    80    |          | Accept |
-| 5    |                   |     IP serveur web     | TCP  |          |          |  Deny  |
-| 6    | 192.168.100.0/24  |     IP Serveur DMZ     | TCP  |          |    23    | Accept |
-| 6    |  IP Serveur DMZ   |    192.168.100.0/24    | TCP  |    23    |          | Accept |
+| 6    | 192.168.100.0/24  |     IP Serveur DMZ     | TCP  |          |    22    | Accept |
+| 6    |  IP Serveur DMZ   |    192.168.100.0/24    | TCP  |    22    |          | Accept |
 | 1    | 192.168.100.0/24  |         IP DNS         | UDP  |          |    53    | Accept |
 | 1    | 192.168.100.0/24  |         IP DNS         | TCP  |          |    53    | Accept |
 | 1    |      IP DNS       |     192.168.100/24     | TCP  |    53    |          | Accept |
@@ -147,8 +146,8 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 | 3    |                   |    192.168.100.0/24    | TCP  |   8080   |          | Accept |
 | 4    | 192.168.100.0/24  |                        | TCP  |          |   443    | Accept |
 | 4    |                   |    192.168.100.0/24    | TCP  |   443    |          | Accept |
-| 7    | 192.168.100.0/24  |     192.168.100.2      | TCP  |          |    23    | Accept |
-| 7    |   192.168.100.2   |    192.168.100.0/24    | TCP  |    23    |          | Accept |
+| 7    | 192.168.100.0/24  |     192.168.100.2      | TCP  |          |    22    | Accept |
+| 7    |   192.168.100.2   |    192.168.100.0/24    | TCP  |    22    |          | Accept |
 | 8    |                   |     192.168.100/24     |      |          |          |  Deny  |
 | 8    |                   |     192.168.200/24     |      |          |          |  Deny  |
 | 8    |                   |      172.0.0.0/8       |      |          |          |  Deny  |
