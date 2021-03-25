@@ -428,13 +428,8 @@ traceroute 8.8.8.8
 ping www.google.com
 ```
 
-* Faire une capture du ping.
+![image](https://user-images.githubusercontent.com/21290957/112511502-c254a180-8d92-11eb-8199-d652efbe1216.png)
 
----
-
-**LIVRABLE : capture d'écran de votre ping.**
-
----
 
 * Créer et appliquer la règle adéquate pour que la **condition 1 du cahier des charges** soit respectée.
 
