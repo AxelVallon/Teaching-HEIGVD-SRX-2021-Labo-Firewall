@@ -386,18 +386,15 @@ iptables -A FORWARD -s 192.168.200.0/24 -d 192.168.100.0/24 -p icmp --icmp-type 
 ping 8.8.8.8
 ```
 Faire une capture du ping.
+![image](https://user-images.githubusercontent.com/21290957/112502622-81f12580-8d8a-11eb-9edb-dfbda320740b.png)
 
 Vérifiez aussi la route entre votre client et le service `8.8.8.8`. Elle devrait partir de votre client et traverser votre Firewall :
 
 ```bash
 traceroute 8.8.8.8
 ```
+![image](https://user-images.githubusercontent.com/21290957/112505150-caa9de00-8d8c-11eb-8120-8a58649dee2b.png)
 
-
----
-**LIVRABLE : capture d'écran du traceroute et de votre ping vers l'Internet. Il ne devrait pas y avoir des _Redirect Host_ dans les réponses au ping !**
-
----
 
 <ol type="a" start="3">
   <li>Testez ensuite toutes les règles, depuis le Client_in_LAN puis depuis le serveur Web (Server_in_DMZ) et remplir le tableau suivant : 
