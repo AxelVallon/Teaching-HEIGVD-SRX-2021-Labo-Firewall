@@ -510,7 +510,14 @@ iptables -A FORWARD -s 192.168.200.3 -d 0/0 -p TCP --sport 80 -j ACCEPT
 
 ---
 
-**LIVRABLE : capture d'écran.**
+**Connexion au serveur de l'HEIG**
+![image](https://user-images.githubusercontent.com/21290957/112552497-3870fc80-8dc3-11eb-98a0-44271c79c3a9.png)
+
+**Connexion au serveur de l'HEIG en https**
+![image](https://user-images.githubusercontent.com/21290957/112552718-8be34a80-8dc3-11eb-8531-b23e6bd8e83d.png)
+
+**Connexion au serveur DMZ**
+![image](https://user-images.githubusercontent.com/21290957/112552318-e203be00-8dc2-11eb-8db5-0ee2ed3c8f40.png)
 
 ---
 
@@ -543,7 +550,11 @@ ssh root@192.168.200.3
 
 ---
 
-**LIVRABLE : capture d'écran de votre connexion ssh.**
+** Connexion avec ssh au serveur de la DMZ depuis le lan**
+![image](https://user-images.githubusercontent.com/21290957/112552887-d1a01300-8dc3-11eb-98d6-2d778c2dc910.png)
+
+** Connexion avec ssh au serveur FW depuis le lan**
+![image](https://user-images.githubusercontent.com/21290957/112553028-0ad88300-8dc4-11eb-829a-ff7fcadce23b.png)
 
 ---
 
@@ -581,7 +592,7 @@ A présent, vous devriez avoir le matériel nécessaire afin de reproduire la ta
 
 ---
 
-**LIVRABLE : capture d'écran avec toutes vos règles.**
+![image](https://user-images.githubusercontent.com/21290957/112553082-26438e00-8dc4-11eb-8230-bcbaf1bc2da6.png)
 
 ---
 
