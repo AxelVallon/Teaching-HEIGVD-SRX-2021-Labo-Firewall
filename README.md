@@ -126,30 +126,31 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 
 | exo  | Adresse IP source | Adresse IP destination | Type | Port src | Port dst | Action |
 | ---- | :---------------: | :--------------------: | :--: | :------: | :------: | :----: |
-| 5    |        0/0        |     IP serveur web     | TCP  |          |    80    | Accept |
-| 5    |  IP serveur web   |          0/0           | TCP  |    80    |          | Accept |
-| 6    | 192.168.100.0/24  |     IP Serveur DMZ     | TCP  |          |    22    | Accept |
-| 6    |  IP Serveur DMZ   |    192.168.100.0/24    | TCP  |    22    |          | Accept |
 | 1    | 192.168.100.0/24  |         IP DNS         | UDP  |          |    53    | Accept |
 | 1    | 192.168.100.0/24  |         IP DNS         | TCP  |          |    53    | Accept |
 | 1    |      IP DNS       |     192.168.100/24     | TCP  |    53    |          | Accept |
 | 1    |      IP DNS       |     192.168.100/24     | UDP  |    53    |          | Accept |
-| 2    | 192.168.100.0/24  |           *            | ICMP |          |    8     | Accept |
-| 2    |         *         |    192.168.100.0/24    | ICMP |    0     |          | Accept |
+| 2    | 192.168.100.0/24  |          0/0           | ICMP |          |    8     | Accept |
+| 2    |        0/0        |    192.168.100.0/24    | ICMP |    0     |          | Accept |
 | 2    | 192.168.200.0/24  |    192.168.100.0/24    | ICMP |          |    8     | Accept |
 | 2    | 192.168.100.0/24  |    192.168.200.0/24    | ICMP |    0     |          | Accept |
-| 2    | 192.168.200.0/24  |    192.168.100.0/24    | ICMP |    0     |          | Accept |
 | 3    | 192.168.100.0/24  |          0/0           | TCP  |          |    80    | Accept |
 | 3    | 192.168.100.0/24  |          0/0           | TCP  |          |   8080   | Accept |
 | 3    |        0/0        |    192.168.100.0/24    | TCP  |    80    |          | Accept |
 | 3    |        0/0        |    192.168.100.0/24    | TCP  |   8080   |          | Accept |
 | 4    | 192.168.100.0/24  |          0/0           | TCP  |          |   443    | Accept |
 | 4    |        0/0        |    192.168.100.0/24    | TCP  |   443    |          | Accept |
+| 5    |        0/0        |     192.168.200.3      | TCP  |          |    80    | Accept |
+| 5    |   192.168.200.3   |          0/0           | TCP  |    80    |          | Accept |
+| 6    | 192.168.100.0/24  |     192.168.200.3      | TCP  |          |    22    | Accept |
+| 6    |   192.168.200.3   |    192.168.100.0/24    | TCP  |    22    |          | Accept |
 | 7    | 192.168.100.0/24  |     192.168.100.2      | TCP  |          |    22    | Accept |
 | 7    |   192.168.100.2   |    192.168.100.0/24    | TCP  |    22    |          | Accept |
 | 8    |        0/0        |     192.168.100/24     |      |          |          |  Deny  |
 | 8    |        0/0        |     192.168.200/24     |      |          |          |  Deny  |
 | 8    |        0/0        |      172.0.0.0/8       |      |          |          |  Deny  |
+
+Il est bon de noter que les règles du point 8 seront inscrites avec le comportement par défaut bloquant `iptables -P INPUT|OUTPUT|FORWARD DROP.`
 
 ---
 
@@ -282,11 +283,9 @@ Si votre ping passe mais que la réponse contient un _Redirect Host_, ceci indiq
 
 ---
 
-**LIVRABLE : capture d'écran de votre ping vers l'Internet. Un ping qui ne passe pas ou des réponses containant des _Redirect Host_ sont acceptés.**
-
----
 ![image](https://user-images.githubusercontent.com/21290957/111645979-899c5180-8801-11eb-9de3-8dcbaea963a6.png)
 
+---
 
 ### Configuration réseau du firewall
 
@@ -363,12 +362,8 @@ Commandes iptables :
 ---
 
 ```bash
-iptables -P INPUT DROP
-iptables -P OUTPUT DROP
-iptables -P FORWARD DROP
-iptables -A FORWARD -s 192.168.200.0/24 -d 192.168.100.0/24  -p icmp --icmp-type 0 -j ACCEPT
 iptables -A FORWARD -s 192.168.100.0/24 -d 0/0 -p icmp --icmp-type 8 -j ACCEPT
-iptables -A FORWARD -s 0/0 -d 192.168.100.0/24  -p icmp --icmp-type 0 -j ACCEPT
+iptables -A FORWARD -s 0/0 -d 192.168.100.0/24 -p icmp --icmp-type 0 -j ACCEPT
 iptables -A FORWARD -s 192.168.200.0/24 -d 192.168.100.0/24 -p icmp --icmp-type 8 -j ACCEPT
 iptables -A FORWARD -s 192.168.100.0/24 -d 192.168.200.0/24 -p icmp --icmp-type 0 -j ACCEPT
 ```
@@ -440,6 +435,8 @@ Commandes iptables :
 ```bash
 iptables -A FORWARD -s 192.168.100/24 -p udp --dport 53 -j ACCEPT
 iptables -A FORWARD -d 192.168.100/24 -p udp --sport 53 -j ACCEPT
+iptables -A FORWARD -s 192.168.100/24 -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -d 192.168.100/24 -p tcp --sport 53 -j ACCEPT
 ```
 
 ---
@@ -450,8 +447,6 @@ iptables -A FORWARD -d 192.168.100/24 -p udp --sport 53 -j ACCEPT
 </ol>
 
 ---
-
-**LIVRABLE : capture d'écran de votre ping.**
 
 ![image](https://user-images.githubusercontent.com/21290957/112512774-f5e3fb80-8d93-11eb-90c0-126158fab3d9.png)
 
@@ -466,7 +461,7 @@ iptables -A FORWARD -d 192.168.100/24 -p udp --sport 53 -j ACCEPT
 ---
 **Réponse**
 
-**LIVRABLE : Votre réponse ici...**
+Le premier ping a traduit l'adresse de www.google.ch, et ensuite les ping ont été effectués avec l'adresse IP.
 
 ---
 
@@ -486,7 +481,12 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -s 192.168.100.0/24 -d 0/0 -p TCP --dport 80 -j ACCEPT
+iptables -A FORWARD -s 192.168.100.0/24 -d 0/0 -p TCP --dport 8080 -j ACCEPT
+iptables -A FORWARD -s 0/0 -d 192.168.100.0/24 -p TCP --sport 80 -j ACCEPT
+iptables -A FORWARD -s 0/0 -d 192.168.100.0/24 -p TCP --sport 8080 -j ACCEPT
+iptables -A FORWARD -s 192.168.100.0/24 -d 0/0 -p TCP --dport 443 -j ACCEPT
+iptables -A FORWARD -s 0/0 -d 192.168.100.0/24 -p TCP --sport 443 -j ACCEPT
 ```
 
 ---
@@ -498,7 +498,8 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -s 0/0 -d 192.168.200.3 -p TCP --dport 80 -j ACCEPT
+iptables -A FORWARD -s 192.168.200.3 -d 0/0 -p TCP --sport 80 -j ACCEPT
 ```
 ---
 
@@ -526,7 +527,10 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -s 192.168.100.0/24 -d 192.168.200.3 -p TCP --dport 22 -j ACCEPT
+iptables -A FORWARD -s 192.168.200.3 -d 192.168.100.0/24 -p TCP --sport 22 -j ACCEPT
+iptables -A INPUT -s 192.168.100.0/24 -d 192.168.100.2 -p TCP --dport 22 -j ACCEPT
+iptables -A OUTPUT -s 192.168.100.2 -d 192.168.100.0/24 -p TCP --sport 22 -j ACCEPT
 ```
 
 ---
@@ -551,7 +555,7 @@ ssh root@192.168.200.3
 ---
 **Réponse**
 
-**LIVRABLE : Votre réponse ici...**
+Elle permet à un administrateur réseau de se connecter à distance, avec une connexion sécurisée, afin d'administrer grâce au shell les différents services. 
 
 ---
 
@@ -559,12 +563,10 @@ ssh root@192.168.200.3
   <li>En général, à quoi faut-il particulièrement faire attention lors de l'écriture des règles du pare-feu pour ce type de connexion ? 
   </li>                                  
 </ol>
-
-
 ---
 **Réponse**
 
-**LIVRABLE : Votre réponse ici...**
+Comme une liaison doit être intègre, authentique et confidentielle,  il faut bien vérifier à l'aide du pare-feu que quelqu'un de extérieur de ne fasse pas passer pour quelqu'un d'autre (man in the middle). Pour ceci, vérifier les que la connexion vient en interne. Il pourrait toujours avoir une intrusion ou un espion en interne, mais il sera impossible pour un attaquant de se connecter au serveur depuis extérieur, ce qui est une bonne protection. Si quelqu'un arrivait à trouver les identifiants sur serveur, alors ce serait une catastrophe, car il pourrait changer tous les filtres `iptables.`
 
 ---
 
@@ -582,3 +584,4 @@ A présent, vous devriez avoir le matériel nécessaire afin de reproduire la ta
 **LIVRABLE : capture d'écran avec toutes vos règles.**
 
 ---
+
