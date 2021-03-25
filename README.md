@@ -453,6 +453,7 @@ iptables -A FORWARD -d 192.168.100/24 -p udp --sport 53 -j ACCEPT
 
 **LIVRABLE : capture d'écran de votre ping.**
 
+![image](https://user-images.githubusercontent.com/21290957/112512774-f5e3fb80-8d93-11eb-90c0-126158fab3d9.png)
 
 
 ---
