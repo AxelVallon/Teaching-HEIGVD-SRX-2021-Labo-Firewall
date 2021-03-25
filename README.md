@@ -579,7 +579,7 @@ Elle permet à un administrateur réseau de se connecter à distance, avec une c
 
 **Réponse**
 
-Comme une liaison doit être intègre, authentique et confidentielle,  il faut bien vérifier à l'aide du pare-feu que quelqu'un de extérieur de ne fasse pas passer pour quelqu'un d'autre (man in the middle). Pour ceci, vérifier les que la connexion vient en interne. Il pourrait toujours avoir une intrusion ou un espion en interne, mais il sera impossible pour un attaquant de se connecter au serveur depuis extérieur, ce qui est une bonne protection. Si quelqu'un arrivait à trouver les identifiants sur serveur, alors ce serait une catastrophe, car il pourrait changer tous les filtres `iptables.`
+Comme une liaison doit être intègre, authentique et confidentielle,  il faut bien vérifier à l'aide du pare-feu que quelqu'un de extérieur de ne fasse pas passer pour quelqu'un d'autre (man in the middle). Pour ceci, vérifier  que la connexion vient en interne. Il pourrait toujours avoir une intrusion ou un espion en interne, mais il sera impossible pour un attaquant de se connecter au serveur depuis extérieur, ce qui est une bonne protection. Si quelqu'un arrivait à trouver les identifiants sur serveur, alors ce serait une catastrophe, car il pourrait changer tous les filtres `iptables.` De plus, en donnant accès à l'exterieur, il serait possible qu'un réseau de bot fasse une attaque de bruteforce sur le mot de passe, d'où l'utilité de bloquer les accès depuis l'exterieur. 
 
 ---
 
