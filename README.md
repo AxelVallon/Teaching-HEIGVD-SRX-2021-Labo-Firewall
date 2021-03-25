@@ -122,7 +122,6 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 
 ---
 
-**LIVRABLE : Remplir le tableau**
 
 | exo  | Adresse IP source | Adresse IP destination | Type | Port src | Port dst | Action |
 | ---- | :---------------: | :--------------------: | :--: | :------: | :------: | :----: |
@@ -228,7 +227,7 @@ ping 192.168.200.3
 ```
 ---
 
-**LIVRABLE : capture d'écran de votre tentative de ping.**  
+![image](https://user-images.githubusercontent.com/21290957/112553691-458eeb00-8dc5-11eb-878d-c628384da420.png)
 
 ---
 
@@ -564,6 +563,7 @@ ssh root@192.168.200.3
 </ol>
 
 ---
+
 **Réponse**
 
 Elle permet à un administrateur réseau de se connecter à distance, avec une connexion sécurisée, afin d'administrer grâce au shell les différents services. 
@@ -575,6 +575,7 @@ Elle permet à un administrateur réseau de se connecter à distance, avec une c
   </li>                                  
 </ol>
 ---
+
 **Réponse**
 
 Comme une liaison doit être intègre, authentique et confidentielle,  il faut bien vérifier à l'aide du pare-feu que quelqu'un de extérieur de ne fasse pas passer pour quelqu'un d'autre (man in the middle). Pour ceci, vérifier les que la connexion vient en interne. Il pourrait toujours avoir une intrusion ou un espion en interne, mais il sera impossible pour un attaquant de se connecter au serveur depuis extérieur, ce qui est une bonne protection. Si quelqu'un arrivait à trouver les identifiants sur serveur, alors ce serait une catastrophe, car il pourrait changer tous les filtres `iptables.`
