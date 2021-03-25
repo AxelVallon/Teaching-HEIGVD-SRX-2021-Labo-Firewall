@@ -438,7 +438,8 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -s 192.168.100/24 -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -d 192.168.100/24 -p udp --sport 53 -j ACCEPT
 ```
 
 ---
@@ -451,6 +452,8 @@ LIVRABLE : Commandes iptables
 ---
 
 **LIVRABLE : capture d'écran de votre ping.**
+
+
 
 ---
 
