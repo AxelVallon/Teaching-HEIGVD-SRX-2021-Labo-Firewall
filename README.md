@@ -126,31 +126,30 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 
 | exo  | Adresse IP source | Adresse IP destination | Type | Port src | Port dst | Action |
 | ---- | :---------------: | :--------------------: | :--: | :------: | :------: | :----: |
-| 5    |                   |     IP serveur web     | TCP  |          |    80    | Accept |
-| 5    |  IP serveur web   |                        | TCP  |    80    |          | Accept |
+| 5    |        0/0        |     IP serveur web     | TCP  |          |    80    | Accept |
+| 5    |  IP serveur web   |          0/0           | TCP  |    80    |          | Accept |
 | 6    | 192.168.100.0/24  |     IP Serveur DMZ     | TCP  |          |    22    | Accept |
 | 6    |  IP Serveur DMZ   |    192.168.100.0/24    | TCP  |    22    |          | Accept |
 | 1    | 192.168.100.0/24  |         IP DNS         | UDP  |          |    53    | Accept |
 | 1    | 192.168.100.0/24  |         IP DNS         | TCP  |          |    53    | Accept |
 | 1    |      IP DNS       |     192.168.100/24     | TCP  |    53    |          | Accept |
 | 1    |      IP DNS       |     192.168.100/24     | UDP  |    53    |          | Accept |
-| 2    | 192.168.100.0/24  |      172.0.0.0/8       | ICMP |          |    8     | Accept |
-| 2    |    172.0.0.0/8    |    192.168.100.0/24    | ICMP |    0     |          | Accept |
+| 2    | 192.168.100.0/24  |           *            | ICMP |          |    8     | Accept |
+| 2    |         *         |    192.168.100.0/24    | ICMP |    0     |          | Accept |
 | 2    | 192.168.200.0/24  |    192.168.100.0/24    | ICMP |          |    8     | Accept |
 | 2    | 192.168.100.0/24  |    192.168.200.0/24    | ICMP |    0     |          | Accept |
-| 2    | 192.168.100.0/24  |    192.168.200.0/24    | ICMP |          |    8     | Accept |
 | 2    | 192.168.200.0/24  |    192.168.100.0/24    | ICMP |    0     |          | Accept |
-| 3    | 192.168.100.0/24  |      172.0.0.0/8       | TCP  |          |    80    | Accept |
-| 3    | 192.168.100.0/24  |      172.0.0.0/8       | TCP  |          |   8080   | Accept |
-| 3    |    172.0.0.0/8    |    192.168.100.0/24    | TCP  |    80    |          | Accept |
-| 3    |    172.0.0.0/8    |    192.168.100.0/24    | TCP  |   8080   |          | Accept |
-| 4    | 192.168.100.0/24  |      172.0.0.0/8       | TCP  |          |   443    | Accept |
-| 4    |    172.0.0.0/8    |    192.168.100.0/24    | TCP  |   443    |          | Accept |
+| 3    | 192.168.100.0/24  |          0/0           | TCP  |          |    80    | Accept |
+| 3    | 192.168.100.0/24  |          0/0           | TCP  |          |   8080   | Accept |
+| 3    |        0/0        |    192.168.100.0/24    | TCP  |    80    |          | Accept |
+| 3    |        0/0        |    192.168.100.0/24    | TCP  |   8080   |          | Accept |
+| 4    | 192.168.100.0/24  |          0/0           | TCP  |          |   443    | Accept |
+| 4    |        0/0        |    192.168.100.0/24    | TCP  |   443    |          | Accept |
 | 7    | 192.168.100.0/24  |     192.168.100.2      | TCP  |          |    22    | Accept |
 | 7    |   192.168.100.2   |    192.168.100.0/24    | TCP  |    22    |          | Accept |
-| 8    |                   |     192.168.100/24     |      |          |          |  Deny  |
-| 8    |                   |     192.168.200/24     |      |          |          |  Deny  |
-| 8    |                   |      172.0.0.0/8       |      |          |          |  Deny  |
+| 8    |        0/0        |     192.168.100/24     |      |          |          |  Deny  |
+| 8    |        0/0        |     192.168.200/24     |      |          |          |  Deny  |
+| 8    |        0/0        |      172.0.0.0/8       |      |          |          |  Deny  |
 
 ---
 
@@ -367,11 +366,11 @@ Commandes iptables :
 iptables -P INPUT DROP
 iptables -P OUTPUT DROP
 iptables -P FORWARD DROP
-iptables -A FORWARD -s 192.168.100.0/24 -d 192.168.200.0/24 -p icmp --icmp-type 8 -j ACCEPT
 iptables -A FORWARD -s 192.168.200.0/24 -d 192.168.100.0/24  -p icmp --icmp-type 0 -j ACCEPT
-iptables -A FORWARD -s 192.168.100.0/24 -p icmp --icmp-type 8 -j ACCEPT
-iptables -A FORWARD  -d 192.168.100.0/24  -p icmp --icmp-type 0 -j ACCEPT
+iptables -A FORWARD -s 192.168.100.0/24 -d 0/0 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A FORWARD -s 0/0 -d 192.168.100.0/24  -p icmp --icmp-type 0 -j ACCEPT
 iptables -A FORWARD -s 192.168.200.0/24 -d 192.168.100.0/24 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A FORWARD -s 192.168.100.0/24 -d 192.168.200.0/24 -p icmp --icmp-type 0 -j ACCEPT
 ```
 ---
 
@@ -402,20 +401,20 @@ traceroute 8.8.8.8
 </ol>
 
 
-| De Client\_in\_LAN à | OK/KO | Commentaires et explications |
-| :---                 | :---: | :---                         |
-| Interface DMZ du FW  |       |                              |
-| Interface LAN du FW  |       |                              |
-| Client LAN           |       |                              |
-| Serveur WAN          |       |                              |
+| De Client\_in\_LAN à | OK/KO | Commentaires et explications                                 |
+| :------------------- | :---: | :----------------------------------------------------------- |
+| Interface DMZ du FW  |  KO   | On ne permet aucun ping depuis le LAN sur l'entrée du FW. Il faudrait configurer INPUT |
+| Interface LAN du FW  |  KO   | On ne permet aucun ping depuis le LAN sur l'entrée du FW. Il faudrait configurer INPUT |
+| Client LAN           |  OK   | Une machine peut toujours se ping elle-même.                 |
+| Serveur WAN          |  OK   | On a autorisé cette opération.                               |
 
 
-| De Server\_in\_DMZ à | OK/KO | Commentaires et explications |
-| :---                 | :---: | :---                         |
-| Interface DMZ du FW  |       |                              |
-| Interface LAN du FW  |       |                              |
-| Serveur DMZ          |       |                              |
-| Serveur WAN          |       |                              |
+| De Server\_in\_DMZ à | OK/KO | Commentaires et explications                                 |
+| :------------------- | :---: | :----------------------------------------------------------- |
+| Interface DMZ du FW  |  KO   | On ne permet aucun ping depuis la DMZ sur l'entrée du FW. Il faudrait configurer INPUT |
+| Interface LAN du FW  |  KO   | On ne permet aucun ping depuis la DMZ sur l'entrée du FW. Il faudrait configurer INPUT |
+| Serveur DMZ          |  OK   | Une machine peut toujours se ping elle-même                  |
+| Serveur WAN          |  OK   | On a ouvert les accès pour cela                              |
 
 
 ## Règles pour le protocole DNS
