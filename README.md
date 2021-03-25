@@ -549,10 +549,10 @@ ssh root@192.168.200.3
 
 ---
 
-** Connexion avec ssh au serveur de la DMZ depuis le lan**
+**Connexion avec ssh au serveur de la DMZ depuis le lan**
 ![image](https://user-images.githubusercontent.com/21290957/112552887-d1a01300-8dc3-11eb-98d6-2d778c2dc910.png)
 
-** Connexion avec ssh au serveur FW depuis le lan**
+**Connexion avec ssh au serveur FW depuis le lan**
 ![image](https://user-images.githubusercontent.com/21290957/112553028-0ad88300-8dc4-11eb-829a-ff7fcadce23b.png)
 
 ---
@@ -574,6 +574,7 @@ Elle permet à un administrateur réseau de se connecter à distance, avec une c
   <li>En général, à quoi faut-il particulièrement faire attention lors de l'écriture des règles du pare-feu pour ce type de connexion ? 
   </li>                                  
 </ol>
+
 ---
 
 **Réponse**
