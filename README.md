@@ -408,7 +408,7 @@ traceroute 8.8.8.8
 | Interface DMZ du FW  |  KO   | On ne permet aucun ping depuis la DMZ sur l'entrée du FW. Il faudrait configurer INPUT |
 | Interface LAN du FW  |  KO   | On ne permet aucun ping depuis la DMZ sur l'entrée du FW. Il faudrait configurer INPUT |
 | Serveur DMZ          |  OK   | Une machine peut toujours se ping elle-même                  |
-| Serveur WAN          |  OK   | On a ouvert les accès pour cela                              |
+| Serveur WAN          |  KO   | On a pas authorisé au DMZ de ping dehors, donc c'est bloqué par défaut |
 
 
 ## Règles pour le protocole DNS
